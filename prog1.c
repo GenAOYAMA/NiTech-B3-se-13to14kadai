@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "prog1.h"
 
 typedef struct{
     char name[100];
@@ -96,21 +95,28 @@ void deleteWord(data *dict, int *count) {
     }
 }
 
-//5　ソート(バブルソート)
+//5　ソート(クイックソート)
 void sortDictionary(data *dict, int count) {
     if(count < 2){
         printf("データが少ないためソートの必要がありません。\n");
         return;
     }
-    for(int i = 0; i < count - 1; i++){
-        for(int j = 0; j < count - 1 - i; j++){
-            if(strcmp(dict[j].name, dict[j+1].name) > 0){
-                data temp = dict[j];
-                dict[j] = dict[j+1];
-                dict[j+1] = temp;
-            }
-        }
+    //クイックソートの実装
+    int pivotIndex = count / 2;
+    char *pivot = dict[pivotIndex].name;
+    int i, j;
+    data temp;
+    for(i = 0, j = count - 1; ; i++, j--){
+        while(strcmp(dict[i].name, pivot) < 0) i++;
+        while(strcmp(dict[j].name, pivot) > 0) j--;
+        if(i >= j) break;
+        temp = dict[i];
+        dict[i] = dict[j];
+        dict[j] = temp;
     }
+    sortDictionary(dict, i);
+    sortDictionary(dict + i, count - i);
+
     printf("UTF-8順にソートしました。\n");
 }
 
@@ -267,7 +273,7 @@ int main(void){
         printf("2: 検索\n");
         printf("3: 追加\n");
         printf("4: 削除\n");
-        printf("(メンテナンス中: 5: ソート)\n");
+        printf("5: ソート\n");
         printf("6: 保存して終了\n");
         printf("0: 保存せずに終了\n");
         printf("選択してください > ");
@@ -292,8 +298,7 @@ int main(void){
             deleteWord(dictionary, &dictIndex);//アドレスを渡す
         }
         else if(choice == 5){
-            /*sortDictionary(dictionary, dictIndex);*/
-            printf("ソート機能は現在メンテナンス中です。\n");
+            sortDictionary(dictionary, dictIndex);
         }
         else if(choice == 6){
             //保存処理
