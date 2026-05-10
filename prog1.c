@@ -120,6 +120,15 @@ void sortDictionary(data *dict, int count) {
     printf("UTF-8順にソートしました。\n");
 }
 
+//6 辞書情報の確認（ステータス表示）
+void showDictStatus(char *filename, int count) {
+    printf("\n--- 辞書ステータス ---\n");
+    printf("現在のファイル: %s\n", filename);
+    printf("登録済みデータ数: %d 件\n", count);
+    printf("残り登録可能数: %d 件\n", 100 - count);
+    printf("----------------------\n");
+}
+
 //===============================================================================
 int main(void){
     FILE *fp;
@@ -274,7 +283,8 @@ int main(void){
         printf("3: 追加\n");
         printf("4: 削除\n");
         printf("5: ソート\n");
-        printf("6: 保存して終了\n");
+        printf("6: ステータス表示\n");
+        printf("7: 保存して終了\n");
         printf("0: 保存せずに終了\n");
         printf("選択してください > ");
         
@@ -301,6 +311,9 @@ int main(void){
             sortDictionary(dictionary, dictIndex);
         }
         else if(choice == 6){
+            showDictStatus(filename, dictIndex);
+        }
+        else if(choice == 7){
             //保存処理
             printf("保存処理を開始します...\n");
 
