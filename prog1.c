@@ -21,6 +21,9 @@ unsigned char* getPixelPtr(unsigned char *image, int index){
     return &image[index * 3];//1ピクセルは3バイトで管理されているので、i*3で各ピクセルの先頭アドレスを取得できる。
 }
 
+#define MAX_WORDS 100
+#define MAX_FILENAME 60
+
 //========辞書メニュー========
 //1 一覧
 void showList(data *dict, int index, int count){
@@ -37,7 +40,7 @@ void showList(data *dict, int index, int count){
 
 //2 言葉検索
 void searchWord(data *dict, int count) {
-    char searchName[100];
+    char searchName[MAX_WORDS];
     printf("検索する単語を入力: ");
     scanf("%s", searchName);
     
@@ -54,8 +57,8 @@ void searchWord(data *dict, int count) {
 
 //3 追加
 void addWord(data *dict, int *count) {
-    if(*count >= 100){
-        printf("辞書がいっぱいです（最大100件）。\n");
+    if(*count >= MAX_WORDS){
+        printf("辞書がいっぱいです（最大%d件）。\n", MAX_WORDS);
         return;
     }
     printf("新しい単語名: ");
@@ -123,7 +126,7 @@ void sortDictionary(data *dict, int count) {
 //===============================================================================
 int main(void){
     FILE *fp;
-    char filename[60];
+    char filename[MAX_FILENAME];
 
     //共通で使用する変数
     int width = 50; //デフォルト幅
@@ -138,7 +141,7 @@ int main(void){
     char info[40] = { 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 24, 0 };
 
     //辞書データ
-    data dictionary[100];
+    data dictionary[MAX_WORDS];
     int dictIndex = 0;
     memset(dictionary, 0, sizeof(dictionary));
 
@@ -217,7 +220,7 @@ int main(void){
                     dictIndex++;
                     mode = MODE_NAME;
                     strIndex = 0;
-                    if(dictIndex >= 100) break;
+                    if(dictIndex >= MAX_WORDS) break;
                 }
             }
             else {//文字データ
