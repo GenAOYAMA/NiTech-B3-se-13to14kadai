@@ -267,7 +267,7 @@ int main(void){
         printf("2: 検索\n");
         printf("3: 追加\n");
         printf("4: 削除\n");
-        printf("5: ソート\n");
+        printf("(メンテナンス中: 5: ソート)\n");
         printf("6: 保存して終了\n");
         printf("0: 保存せずに終了\n");
         printf("選択してください > ");
@@ -292,7 +292,8 @@ int main(void){
             deleteWord(dictionary, &dictIndex);//アドレスを渡す
         }
         else if(choice == 5){
-            sortDictionary(dictionary, dictIndex);
+            /*sortDictionary(dictionary, dictIndex);*/
+            printf("ソート機能は現在メンテナンス中です。\n");
         }
         else if(choice == 6){
             //保存処理
